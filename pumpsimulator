@@ -1,0 +1,34 @@
+program PumpSimulator
+  use input_reader_module
+  use fluid_flow_module
+  use turbulence_model_module
+  use pump_performance_module
+  use operating_maps_module
+  use optimization_module, only: pump_optimization  ! Optional
+
+  implicit none
+
+  ! Main program variables
+  character(80) :: input_file = 'input_example.txt'
+  real(8) :: pump_head, flow_rate, efficiency, power_consumption
+
+  ! Read input data from the input file
+  call read_input_data(input_file)
+
+  ! Perform fluid flow simulation
+  call simulate_fluid_flow()
+
+  ! Calculate pump performance parameters
+  call calculate_pump_performance(pump_head, flow_rate, efficiency, power_consumption)
+
+  ! Generate operating maps
+  call generate_operating_maps()
+
+  ! Optional pump optimization
+  if (present(pump_optimization)) then
+    call pump_optimization()
+  end if
+
+  ! Display results or save them to files as needed
+
+end program PumpSimulator
